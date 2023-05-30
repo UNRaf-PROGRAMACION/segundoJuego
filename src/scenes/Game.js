@@ -24,16 +24,14 @@ export default class Juego extends Phaser.Scene {
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
     const capaFondo = map.addTilesetImage("sky", "tilesFondo");
-    const capaPlataform = map.addTilesetImage("platform_atlas", "tilesPlataforma");
+    const capaPlataform = map.addTilesetImage(
+      "platform_atlas",
+      "tilesPlataforma"
+    );
 
     // Parameters: layer name (or index) from Tiled, tileset, x, y
     const fondoLayer = map.createLayer("background", capaFondo, 0, 0);
-    const plataformaLayer = map.createLayer(
-      "platform",
-      capaPlataform,
-      0,
-      0
-    );
+    const plataformaLayer = map.createLayer("platform", capaPlataform, 0, 0);
     const objectosLayer = map.getObjectLayer("objects");
 
     plataformaLayer.setCollisionByProperty({ collision: true });
@@ -53,12 +51,11 @@ export default class Juego extends Phaser.Scene {
 
     spawnPoint = map.findObject("objects", (obj) => obj.name === "salida");
     console.log("spawn point salida ", spawnPoint);
-    if (spawnPoint){
+    if (spawnPoint) {
       this.salida = this.physics.add
-      .sprite(spawnPoint.x, spawnPoint.y, "salida") 
-      .setScale(0.2);
+        .sprite(spawnPoint.x, spawnPoint.y, "salida")
+        .setScale(0.2);
     }
-    
 
     //  Input Events
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -109,20 +106,17 @@ export default class Juego extends Phaser.Scene {
     );
 
     this.timer = 20;
-    this.timeText = this.add.text(750 , 20, this.timer, {
+    this.timeText = this.add.text(750, 20, this.timer, {
       fontSize: "35px",
       fontStyle: "bold",
       fill: "#FFFFFF",
-    }); 
+    });
     this.time.addEvent({
       delay: 1000,
       callback: this.onSecond,
       callbackScope: this,
-      loop: true
-    })
-    
-
-    
+      loop: true,
+    });
   }
 
   update() {
@@ -175,12 +169,11 @@ export default class Juego extends Phaser.Scene {
     });
   }
 
-  onSecond (){
+  onSecond() {
     this.timer--;
     this.timeText.setText(this.timer);
-    if ( this.timer <=0){
+    if (this.timer <= 0) {
       this.gameOver = true;
     }
   }
 }
-
